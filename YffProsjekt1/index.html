@@ -1,0 +1,42 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Three Column Layout</title>
+  <link rel="stylesheet" href="style.css"> <!-- link external CSS -->
+</head>
+<body>
+  <div class="left">
+    <a href="index.html">
+      <img src="Bilder/BoligoLogo.png" alt="Post image" width="190">
+    </a>
+
+    <ul class="menu">
+      <li><a href="index.html"><img src="bilder/home.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;"> Hjem</a></li>
+      <li><a href="sok.html"><img src="bilder/search.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;"> Søk</a></li>
+      <li><a href="kart.html"><img src="bilder/world.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;"> Kart</a></li>
+      <li><a href="meldinger.html"><img src="bilder/message.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;"> Meldinger</a></li>
+      <li><a href="varsler.html"><img src="bilder/alarm.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;"> Varsler</a></li>
+      <li><a href="opprett.html"> <img src="bilder/plus.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;">Opprett</a></li>
+      <li><a href="profil.html">     <img src="bilder/profil.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;">
+Profil</a></li>
+    </ul>
+  </div>
+
+  <div class="right">
+    <h3>Right Container</h3>
+    <p>This section is bigger than the others.</p>
+  </div>
+
+  <script>
+    // Highlight the link for the current page
+    const links = document.querySelectorAll(".menu a");
+    links.forEach(link => {
+      if (link.href === window.location.href) {
+        link.classList.add("active");
+      }
+    });
+  </script>
+</body>
+</html>
