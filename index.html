@@ -1,42 +1,119 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Three Column Layout</title>
-  <link rel="stylesheet" href="style.css"> <!-- link external CSS -->
+  <title>Boligo Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-box {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      width: 300px;
+    }
+    h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #message {
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <div class="left">
-    <a href="index.html">
-      <img src="Bilder/BoligoLogo.png" alt="Post image" width="190">
-    </a>
+  <div class="login-box">
+    <h2>Login</h2>
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button onclick="loginUser()">Login</button>
 
-    <ul class="menu">
-      <li><a href="index.html"><img src="bilder/home.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;"> Hjem</a></li>
-      <li><a href="sok.html"><img src="bilder/search.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;"> Søk</a></li>
-      <li><a href="kart.html"><img src="bilder/world.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;"> Kart</a></li>
-      <li><a href="meldinger.html"><img src="bilder/message.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;"> Meldinger</a></li>
-      <li><a href="varsler.html"><img src="bilder/alarm.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;"> Varsler</a></li>
-      <li><a href="opprett.html"> <img src="bilder/plus.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;">Opprett</a></li>
-      <li><a href="profil.html">     <img src="bilder/profil.png" alt="icon" style="width:25px; height:auto;  margin-right:6px;">
-Profil</a></li>
-    </ul>
+    <h2>Register</h2>
+    <input type="email" id="registerEmail" placeholder="Email">
+    <input type="password" id="registerPassword" placeholder="Password">
+    <button onclick="registerUser()">Register</button>
+
+    <p id="message"></p>
   </div>
 
-  <div class="right">
-    <h3>Right Container</h3>
-    <p>This section is bigger than the others.</p>
-  </div>
+  <script type="module">
+    // Import Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
+      from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
-  <script>
-    // Highlight the link for the current page
-    const links = document.querySelectorAll(".menu a");
-    links.forEach(link => {
-      if (link.href === window.location.href) {
-        link.classList.add("active");
-      }
-    });
+    // Your Firebase config from Firebase Console
+    const firebaseConfig = {
+      apiKey: "AIzaSyBDlQaQ4xhIlHO_HpzfOu7UIxPa_ob-QZg",
+      authDomain: "boligo-login.firebaseapp.com",
+      projectId: "boligo-login",
+      storageBucket: "boligo-login.appspot.com",
+      messagingSenderId: "39402990294",
+      appId: "1:39402990294:web:abb90e8eeccadeb178b777",
+      measurementId: "G-T7C7TK75KC"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Register new account
+    window.registerUser = function() {
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          document.getElementById("message").innerText = "✅ Account created!";
+        })
+        .catch(err => {
+          document.getElementById("message").innerText = "❌ " + err.message;
+        });
+    }
+
+    // Login existing account
+    window.loginUser = function() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          document.getElementById("message").innerText = "✅ Login successful!";
+          // Example: redirect after login
+          window.location.href = "kart.html";
+        })
+        .catch(err => {
+          document.getElementById("message").innerText = "❌ " + err.message;
+        });
+    }
   </script>
 </body>
 </html>
