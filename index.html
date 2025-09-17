@@ -66,50 +66,58 @@
     <p id="message"></p>
   </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
-    from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } 
+      from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBDlQaQ4xhIlHO_HpzfOu7UIxPa_ob-QZg",
-    authDomain: "boligo-login.firebaseapp.com",
-    projectId: "boligo-login",
-    storageBucket: "boligo-login.appspot.com",
-    messagingSenderId: "39402990294",
-    appId: "1:39402990294:web:abb90e8eeccadeb178b777",
-    measurementId: "G-T7C7TK75KC"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyBDlQaQ4xhIlHO_HpzfOu7UIxPa_ob-QZg",
+      authDomain: "boligo-login.firebaseapp.com",
+      projectId: "boligo-login",
+      storageBucket: "boligo-login.appspot.com",
+      messagingSenderId: "39402990294",
+      appId: "1:39402990294:web:abb90e8eeccadeb178b777",
+      measurementId: "G-T7C7TK75KC"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-  // Register
-  window.registerUser = function() {
-    const email = document.getElementById("registerEmail").value;
-    const password = document.getElementById("registerPassword").value;
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        window.location.href = "index.html"; // redirect after register
-      })
-      .catch(err => {
-        document.getElementById("message").innerText = "❌ " + err.message;
-      });
-  }
+    // Redirect if already logged in
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        window.location.href = "kart.html"; // go to main page
+      }
+    });
 
-  // Login
-  window.loginUser = function() {
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        window.location.href = "index.html"; // redirect after login
-      })
-      .catch(err => {
-        document.getElementById("message").innerText = "❌ " + err.message;
-      });
-  }
-</script>
+    window.registerUser = function() {
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          window.location.href = "kart.html"; // redirect on success
+        })
+        .catch(err => {
+          document.getElementById("message").innerText = "❌ " + err.message;
+        });
+    }
+
+    window.loginUser = function() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          window.location.href = "kart.html"; // redirect on success
+        })
+        .catch(err => {
+          document.getElementById("message").innerText = "❌ " + err.message;
+        });
+    }
+  </script>
 </body>
 </html>
+
+</html>
+
 
