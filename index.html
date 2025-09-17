@@ -66,54 +66,50 @@
     <p id="message"></p>
   </div>
 
-  <script type="module">
-    // Import Firebase SDKs
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
-      from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
+    from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
-    // Your Firebase config from Firebase Console
-    const firebaseConfig = {
-      apiKey: "AIzaSyBDlQaQ4xhIlHO_HpzfOu7UIxPa_ob-QZg",
-      authDomain: "boligo-login.firebaseapp.com",
-      projectId: "boligo-login",
-      storageBucket: "boligo-login.appspot.com",
-      messagingSenderId: "39402990294",
-      appId: "1:39402990294:web:abb90e8eeccadeb178b777",
-      measurementId: "G-T7C7TK75KC"
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyBDlQaQ4xhIlHO_HpzfOu7UIxPa_ob-QZg",
+    authDomain: "boligo-login.firebaseapp.com",
+    projectId: "boligo-login",
+    storageBucket: "boligo-login.appspot.com",
+    messagingSenderId: "39402990294",
+    appId: "1:39402990294:web:abb90e8eeccadeb178b777",
+    measurementId: "G-T7C7TK75KC"
+  };
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-    // Register new account
-    window.registerUser = function() {
-      const email = document.getElementById("registerEmail").value;
-      const password = document.getElementById("registerPassword").value;
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          document.getElementById("message").innerText = "✅ Account created!";
-        })
-        .catch(err => {
-          document.getElementById("message").innerText = "❌ " + err.message;
-        });
-    }
+  // Register
+  window.registerUser = function() {
+    const email = document.getElementById("registerEmail").value;
+    const password = document.getElementById("registerPassword").value;
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        window.location.href = "index.html"; // redirect after register
+      })
+      .catch(err => {
+        document.getElementById("message").innerText = "❌ " + err.message;
+      });
+  }
 
-    // Login existing account
-    window.loginUser = function() {
-      const email = document.getElementById("loginEmail").value;
-      const password = document.getElementById("loginPassword").value;
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          document.getElementById("message").innerText = "✅ Login successful!";
-          // Example: redirect after login
-          window.location.href = "kart.html";
-        })
-        .catch(err => {
-          document.getElementById("message").innerText = "❌ " + err.message;
-        });
-    }
-  </script>
+  // Login
+  window.loginUser = function() {
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        window.location.href = "index.html"; // redirect after login
+      })
+      .catch(err => {
+        document.getElementById("message").innerText = "❌ " + err.message;
+      });
+  }
+</script>
 </body>
 </html>
+
