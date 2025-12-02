@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Boligo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-box {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 40px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #0095f6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background: #007acc;
+    }
+
+    .toggle {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .toggle:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2 id="form-title">Logg inn</h2>
+    <input type="text" id="username" placeholder="Brukernavn" style="display:none;">
+    <input type="email" id="email" placeholder="E-post" required>
+    <input type="password" id="password" placeholder="Passord" required>
+    <button id="submit-btn">Logg inn</button>
+    <p id="message" style="color:red;"></p>
+    <p class="toggle" id="toggle-form">Ingen konto? Registrer deg</p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { 
+      getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword 
+    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { 
+      getFirestore, doc, setDoc 
+    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBDlQaQ4xhIlHO_HpzfOu7UIxPa_ob-QZg",
+      authDomain: "boligo-login.firebaseapp.com",
+      projectId: "boligo-login",
+      storageBucket: "boligo-login.appspot.com",
+      messagingSenderId: "39402990294",
+      appId: "1:39402990294:web:abb90e8eeccadeb178b777"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let isRegistering = false;
+
+    document.getElementById("toggle-form").addEventListener("click", () => {
+      isRegistering = !isRegistering;
+      document.getElementById("form-title").innerText = isRegistering ? "Registrer deg" : "Logg inn";
+      document.getElementById("username").style.display = isRegistering ? "block" : "none";
+      document.getElementById("submit-btn").innerText = isRegistering ? "Registrer" : "Logg inn";
+      document.getElementById("toggle-form").innerText = isRegistering ? "Allerede bruker? Logg inn" : "Ingen konto? Registrer deg";
+    });
+
+    document.getElementById("submit-btn").addEventListener("click", async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const username = document.getElementById("username").value;
+      const message = document.getElementById("message");
+
+      try {
+        if (isRegistering) {
+          const userCred = await createUserWithEmailAndPassword(auth, email, password);
+          await setDoc(doc(db, "users", userCred.user.uid), {
+            username: username,
+            email: email,
+            followers: [],
+            following: [],
+            profilePic: "",
+          });
+          window.location.href = "profile.html";
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+          window.location.href = "profile.html";
+        }
+      } catch (err) {
+        message.innerText = "❌ " + err.message;
+      }
+    });
+  </script>
+</body>
+</html>

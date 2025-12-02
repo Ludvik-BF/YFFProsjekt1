@@ -1,3 +1,4 @@
+/* ====== Base Layout ====== */
 body { 
   margin: 0;
   font-family: Arial, sans-serif;
@@ -12,9 +13,9 @@ body {
 }
 
 .left p {
-  margin-left: 0.3cm;  /* shift text right */
-  margin-top: 0.8cm; /* spacing between items */
-  font-size: 19px;   /* adjust text size */
+  margin-left: 0.3cm;
+  margin-top: 0.8cm;
+  font-size: 19px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
@@ -22,8 +23,13 @@ body {
   width: 70%;
   background-color: #ddd;
   padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* ====== Sidebar Menu ====== */
 .menu {
   list-style: none;
   padding: 0;
@@ -50,8 +56,162 @@ body {
   background-color: #f0f0f0;
 }
 
-/* ACTIVE LINK: Only bold text, no background */
 .menu a.active {
-  font-weight: 700;  /* bold */
-  background-color: transparent !important; /* remove background */
+  font-weight: 700;
+  background-color: transparent !important;
+}
+
+/* ====== Profile Page ====== */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+  width: 100%;
+  max-width: 700px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.profile-pic {
+  width: 160px;
+  height: 160px;
+  position: relative;
+}
+
+.profile-pic img {
+  display: block;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  object-fit: cover;
+  background-color: #eee; /* shows even if image fails */
+}
+
+
+.profile-info {
+  text-align: left;
+}
+
+.username {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.fullname {
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.stats span {
+  font-size: 0.95em;
+  color: #333;
+}
+
+.profile-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.profile-buttons button {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-buttons button:hover {
+  background-color: #ddd;
+}
+
+.new-post {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.circle-plus {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  color: #555;
+  margin-bottom: 8px;
+  background-color: #fafafa;
+}
+
+.share-section {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.share-icon {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.share-section h3 {
+  font-size: 1.5em;
+  margin-bottom: 8px;
+}
+
+.first-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.first-link:hover {
+  text-decoration: underline;
+}
+
+/* ====== Responsive Design ====== */
+@media (max-width: 900px) {
+  .left {
+    display: none;
+  }
+
+  .right {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .profile-container {
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-info {
+    text-align: center;
+  }
 }

@@ -1,119 +1,271 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <title>Boligo Login</title>
+  <title>Profil – Boligo</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
+    /* ---- PROFILE PAGE VISUAL MERGE INTO FUTURE IMPERFECT ---- */
+
+    #profile-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5em 2em;
+    }
+
+    .profile-header {
+      background: #fff;
+      padding: 2em;
+      border-radius: 6px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 2em;
+    }
+
+    .profile-header h2 {
+      margin-bottom: 0.2em;
+      font-size: 2em;
+    }
+
+    .profile-header p {
+      opacity: 0.8;
+      margin-bottom: 0.8em;
+    }
+
+    .profile-stats {
+      margin-top: 0.8em;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
+      gap: 2em;
+      font-size: 1.1em;
     }
-    .login-box {
-      background: white;
-      padding: 20px 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      width: 300px;
+
+    .profile-stats span strong {
+      font-size: 1.2em;
     }
-    h2 {
-      margin-top: 0;
+
+    .logout-btn {
+      margin-top: 1.2em;
+      padding: 0.6em 1.2em;
+    }
+
+    /* ---- UPLOAD AREA ---- */
+    .upload-section {
+      background: #fff;
+      padding: 2em;
+      border-radius: 6px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
       text-align: center;
+      margin-bottom: 2.5em;
     }
-    input {
+
+    .upload-section h3 {
+      margin-bottom: 1em;
+    }
+
+    .upload-section input[type=file] {
+      display: block;
+      margin: 0.5em auto 1em;
+    }
+
+    /* ---- IMAGE GALLERY ---- */
+    #gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2em;
+    }
+
+    #gallery img {
       width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 6px;
+      object-fit: cover;
+      height: 200px;
     }
-    button {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+
+    #uploadStatus {
+      margin-top: 0.8em;
+      font-size: 0.9em;
+      opacity: 0.8;
     }
-    button:hover {
-      background: #0056b3;
-    }
-    #message {
-      text-align: center;
-      margin-top: 10px;
-      font-weight: bold;
-    }
+
   </style>
 </head>
-<body>
-  <div class="login-box">
-    <h2>Login</h2>
-    <input type="email" id="loginEmail" placeholder="Email">
-    <input type="password" id="loginPassword" placeholder="Password">
-    <button onclick="loginUser()">Login</button>
+<body class="is-preload">
 
-    <h2>Register</h2>
-    <input type="email" id="registerEmail" placeholder="Email">
-    <input type="password" id="registerPassword" placeholder="Password">
-    <button onclick="registerUser()">Register</button>
+<!-- Wrapper -->
+<div id="wrapper">
 
-    <p id="message"></p>
+  <!-- HEADER -->
+  <header id="header">
+    <h1><a href="index.html">Boligo</a></h1>
+    <nav class="links">
+      <ul>
+        <li><a href="index.html">Hjem</a></li>
+        <li><a href="sok.html">Søk</a></li>
+        <li><a href="kart.html">Kart</a></li>
+        <li><a href="profil.html">Profil</a></li>
+      </ul>
+    </nav>
+    <nav class="main">
+      <ul>
+        <li><a class="fa-bars" href="#menu">Menu</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- MENU -->
+  <section id="menu">
+    <section>
+      <ul class="links">
+        <li><a href="index.html">Hjem</a></li>
+        <li><a href="sok.html">Søk</a></li>
+        <li><a href="kart.html">Kart</a></li>
+        <li><a href="profil.html">Profil</a></li>
+      </ul>
+    </section>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <div id="main">
+    <div id="profile-wrapper">
+
+      <!-- PROFILE HEADER -->
+      <section class="profile-header">
+        <h2 id="username">brukernavn</h2>
+        <p id="fullname">Fullt navn</p>
+
+        <div class="profile-stats">
+          <span><strong id="postCount">0</strong> innlegg</span>
+          <span><strong id="followerCount">0</strong> følgere</span>
+          <span><strong id="followingCount">0</strong> følger</span>
+        </div>
+
+        <button id="logoutBtn" class="button logout-btn">Logg ut</button>
+      </section>
+
+      <!-- UPLOAD NEW IMAGES -->
+      <section class="upload-section">
+        <h3>Last opp bilder</h3>
+        <input type="file" id="imageUpload" accept="image/*" multiple>
+        <button id="uploadBtn" class="button primary">Last opp</button>
+        <p id="uploadStatus"></p>
+      </section>
+
+      <!-- GALLERY -->
+      <h2>Galleri</h2>
+      <section id="gallery"></section>
+
+    </div>
   </div>
+</div>
 
-  <script type="module">
-    // Import Firebase SDKs
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
-      from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 
-    // Your Firebase config from Firebase Console
-    const firebaseConfig = {
-      apiKey: "AIzaSyBDlQaQ4xhIlHO_HpzfOu7UIxPa_ob-QZg",
-      authDomain: "boligo-login.firebaseapp.com",
-      projectId: "boligo-login",
-      storageBucket: "boligo-login.appspot.com",
-      messagingSenderId: "39402990294",
-      appId: "1:39402990294:web:abb90e8eeccadeb178b777",
-      measurementId: "G-T7C7TK75KC"
-    };
+const firebaseConfig = {
+  apiKey: "AIzaSyBDlQaQ4xhIlHO_HpzfOu7UIxPa_ob-QZg",
+  authDomain: "boligo-login.firebaseapp.com",
+  projectId: "boligo-login",
+  storageBucket: "boligo-login.appspot.com",
+  messagingSenderId: "39402990294",
+  appId: "1:39402990294:web:abb90e8eeccadeb178b777"
+};
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-    // Register new account
-    window.registerUser = function() {
-      const email = document.getElementById("registerEmail").value;
-      const password = document.getElementById("registerPassword").value;
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          document.getElementById("message").innerText = "✅ Account created!";
-        })
-        .catch(err => {
-          document.getElementById("message").innerText = "❌ " + err.message;
-        });
-    }
+const usernameEl = document.getElementById("username");
+const fullnameEl = document.getElementById("fullname");
+const followerCount = document.getElementById("followerCount");
+const followingCount = document.getElementById("followingCount");
+const uploadBtn = document.getElementById("uploadBtn");
+const imageUpload = document.getElementById("imageUpload");
+const uploadStatus = document.getElementById("uploadStatus");
+const gallery = document.getElementById("gallery");
+const logoutBtn = document.getElementById("logoutBtn");
 
-    // Login existing account
-    window.loginUser = function() {
-      const email = document.getElementById("loginEmail").value;
-      const password = document.getElementById("loginPassword").value;
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          document.getElementById("message").innerText = "✅ Login successful!";
-          // Example: redirect after login
-          window.location.href = "kart.html";
-        })
-        .catch(err => {
-          document.getElementById("message").innerText = "❌ " + err.message;
-        });
-    }
-  </script>
+let currentUserUid = null;
+
+/* Load user info */
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  currentUserUid = user.uid;
+  const userRef = doc(db, "users", user.uid);
+  const snap = await getDoc(userRef);
+
+  if (snap.exists()) {
+    const data = snap.data();
+    usernameEl.textContent = data.username || user.email.split("@")[0];
+    fullnameEl.textContent = data.fullname || "";
+    followerCount.textContent = data.followers?.length || 0;
+    followingCount.textContent = data.following?.length || 0;
+    renderGallery(data.images || []);
+  } else {
+    await setDoc(userRef, { username: user.email.split("@")[0], followers: [], following: [], images: [] });
+  }
+});
+
+/* Upload new gallery images */
+uploadBtn.addEventListener("click", async () => {
+  const files = imageUpload.files;
+  if (!files.length) {
+    uploadStatus.textContent = "Velg et eller flere bilder først.";
+    return;
+  }
+
+  uploadStatus.textContent = "Laster opp bilder...";
+  const uploadedURLs = [];
+
+  for (const file of files) {
+    const storageRef = ref(storage, `userImages/${currentUserUid}/${Date.now()}_${file.name}`);
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    uploadedURLs.push(url);
+  }
+
+  const userRef = doc(db, "users", currentUserUid);
+  const snap = await getDoc(userRef);
+  const data = snap.exists() ? snap.data() : { images: [] };
+
+  const updatedImages = [...(data.images || []), ...uploadedURLs];
+  await updateDoc(userRef, { images: updatedImages });
+
+  uploadStatus.textContent = "✅ Opplasting fullført!";
+  renderGallery(updatedImages);
+  imageUpload.value = "";
+});
+
+/* Render gallery */
+function renderGallery(images) {
+  gallery.innerHTML = "";
+  if (!images.length) {
+    gallery.innerHTML = "<p>Ingen bilder enda.</p>";
+    return;
+  }
+
+  images.forEach(url => {
+    const img = document.createElement("img");
+    img.src = url;
+    gallery.appendChild(img);
+  });
+}
+
+/* Logout */
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "index.html";
+});
+</script>
+
 </body>
 </html>
